@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-09-09T23:10:00.000Z" agent="Mozilla/5.0" version="24.7.17">
+
+  <!-- ===================================================== -->
+  <!-- PAGE 1 - HIGH LEVEL DESIGN OVERVIEW -->
+  <!-- ===================================================== -->
+  <diagram id="netflix-hld" name="01 - Netflix HLD Overview">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" page="1" pageScale="1" pageWidth="1600" pageHeight="1000">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="NETFLIX - HIGH LEVEL DESIGN (HLD)" style="text;html=1;strokeColor=none;fillColor=none;fontSize=28;fontStyle=1;fontColor=#1F2937;" vertex="1" parent="1">
+          <mxGeometry x="475" y="30" width="650" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="subtitle" value="Subscription-Based Video Streaming Platform" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontColor=#6B7280;" vertex="1" parent="1">
+          <mxGeometry x="550" y="80" width="500" height="35" as="geometry"/>
+        </mxCell>
+
+        <!-- USERS -->
+        <mxCell id="users" value="USERS&#xa;&#xa;Web Browser&#xa;Mobile App&#xa;Smart TV" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F2FE;strokeColor=#0284C7;strokeWidth=2;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="300" width="180" height="140" as="geometry"/>
+        </mxCell>
+
+        <!-- INTERNET -->
+        <mxCell id="internet" value="INTERNET / HTTPS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3F4F6;strokeColor=#6B7280;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="330" width="160" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- LOAD BALANCER -->
+        <mxCell id="loadBalancer" value="LOAD BALANCER&#xa;&#xa;Traffic Distribution&#xa;Health Checks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;strokeWidth=2;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="300" width="200" height="140" as="geometry"/>
+        </mxCell>
+
+        <!-- BACKEND CLUSTER -->
+        <mxCell id="backendCluster" value="BACKEND APPLICATION CLUSTER" style="swimlane;html=1;rounded=1;horizontal=0;startSize=35;fillColor=#F9FAFB;strokeColor=#374151;strokeWidth=2;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="770" y="170" width="360" height="400" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="server1" value="API SERVER 1&#xa;&#xa;Authentication&#xa;Catalog&#xa;Playback" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#16A34A;strokeWidth=2;fontSize=13;fontStyle=1;" vertex="1" parent="backendCluster">
+          <mxGeometry x="30" y="50" width="140" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="server2" value="API SERVER 2&#xa;&#xa;Authentication&#xa;Progress&#xa;My List" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#16A34A;strokeWidth=2;fontSize=13;fontStyle=1;" vertex="1" parent="backendCluster">
+          <mxGeometry x="190" y="50" width="140" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="serverN" value="API SERVER N&#xa;&#xa;Stateless&#xa;Horizontally Scalable" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#16A34A;strokeWidth=2;fontSize=13;fontStyle=1;" vertex="1" parent="backendCluster">
+          <mxGeometry x="110" y="210" width="140" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- REDIS -->
+        <mxCell id="redis" value="REDIS CACHE&#xa;&#xa;Catalog Cache&#xa;Fast Reads&#xa;Short TTL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEE2E2;strokeColor=#DC2626;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="200" width="220" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- POSTGRESQL -->
+        <mxCell id="postgres" value="POSTGRESQL&#xa;&#xa;Accounts&#xa;Profiles&#xa;Subscriptions&#xa;Titles&#xa;Watch Progress&#xa;My List" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#DBEAFE;strokeColor=#2563EB;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="380" width="220" height="160" as="geometry"/>
+        </mxCell>
+
+        <!-- CDN -->
+        <mxCell id="cdn" value="CDN&#xa;&#xa;Edge Locations&#xa;Video Cache&#xa;Adaptive Streaming&#xa;High Bandwidth Delivery" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#CFFAFE;strokeColor=#0891B2;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="485" y="620" width="250" height="140" as="geometry"/>
+        </mxCell>
+
+        <!-- ENCODING WORKER -->
+        <mxCell id="encodingWorker" value="VIDEO ENCODING WORKER&#xa;&#xa;Transcoding&#xa;Multiple Qualities&#xa;HLS Segments&#xa;Manifest Generation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEDD5;strokeColor=#EA580C;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="770" y="620" width="260" height="140" as="geometry"/>
+        </mxCell>
+
+        <!-- OBJECT STORAGE -->
+        <mxCell id="objectStorage" value="OBJECT STORAGE&#xa;&#xa;Original Videos&#xa;Encoded Videos&#xa;HLS Segments&#xa;Manifests&#xa;Captions" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#EDE9FE;strokeColor=#7C3AED;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="600" width="220" height="180" as="geometry"/>
+        </mxCell>
+
+        <!-- MONITORING -->
+        <mxCell id="monitoring" value="MONITORING &amp; LOGGING&#xa;&#xa;Errors&#xa;Latency&#xa;Server Health&#xa;SQL Load&#xa;CDN Hit Ratio" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E8FF;strokeColor=#9333EA;strokeWidth=2;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="620" width="270" height="140" as="geometry"/>
+        </mxCell>
+
+        <!-- BACKUP -->
+        <mxCell id="backup" value="BACKUP / REPLICA&#xa;&#xa;Database Backup&#xa;Storage Redundancy&#xa;Disaster Recovery" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F1F5F9;strokeColor=#475569;strokeWidth=2;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="830" width="220" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- EDGES -->
+        <mxCell id="edge1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="users" target="internet">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge2" value="HTTPS" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="internet" target="loadBalancer">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge3" value="API Requests" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="loadBalancer" target="backendCluster">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge4" value="Cache Read" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="backendCluster" target="redis">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1160" y="260"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge5" value="Authoritative Data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="backendCluster" target="postgres">
+          <mxGeometry relative="1" as="geometry">
+             <Array as="points">
+              <mxPoint x="1160" y="460"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge6" value="Encoding Jobs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="backendCluster" target="encodingWorker">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge7" value="Read / Write Video" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="encodingWorker" target="objectStorage">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge8" value="Origin" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="objectStorage" target="cdn">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge9" value="Video Segments" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="cdn" target="users">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="140" y="690"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge10" value="Metrics / Logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;dashed=1;strokeWidth=2;" edge="1" parent="1" source="backendCluster" target="monitoring">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="950" y="600"/>
+              <mxPoint x="185" y="600"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge11" value="Backup" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;dashed=1;strokeWidth=2;" edge="1" parent="1" source="postgres" target="backup">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- ===================================================== -->
+  <!-- PAGE 2 - REQUIREMENTS -->
+  <!-- ===================================================== -->
+  <diagram id="requirements" name="02 - Functional and Non-Functional Requirements">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" page="1" pageWidth="1600" pageHeight="1000">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="reqTitle" value="NETFLIX - FUNCTIONAL &amp; NON-FUNCTIONAL REQUIREMENTS" style="text;html=1;strokeColor=none;fillColor=none;fontSize=26;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="30" width="900" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="functionalReq" value="FUNCTIONAL REQUIREMENTS&#xa;&#xa;F1 - Register, Login and Manage Profiles&#xa;&#xa;F2 - Browse Movies and Series&#xa;&#xa;F3 - Search Titles and Episodes&#xa;&#xa;F4 - View Title Details&#xa;&#xa;F5 - Play, Pause and Seek Video&#xa;&#xa;F6 - Adaptive Video Quality&#xa;&#xa;F7 - Check Subscription Before Playback&#xa;&#xa;F8 - Save and Resume Watch Progress&#xa;&#xa;F9 - Add / Remove My List&#xa;&#xa;F10 - Admin Upload and Publish Content&#xa;&#xa;F11 - Encode Videos into Multiple Qualities" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#16A34A;strokeWidth=2;fontSize=15;" vertex="1" parent="1">
+          <mxGeometry x="100" y="120" width="650" height="680" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="nonFunctionalReq" value="NON-FUNCTIONAL REQUIREMENTS&#xa;&#xa;Availability: 99.9% monthly&#xa;&#xa;API Latency: 95% requests below 300 ms&#xa;&#xa;Playback Startup: 95% within 3 seconds&#xa;&#xa;Scalability: 20,000 peak concurrent viewers&#xa;&#xa;Security: HTTPS + Authentication + Authorization&#xa;&#xa;Password Protection: Secure Password Hashing&#xa;&#xa;Durability: Backups + Redundant Storage&#xa;&#xa;Reliability: Failed Encoding Jobs Can Retry&#xa;&#xa;Performance: CDN for Video Delivery&#xa;&#xa;Consistency: Subscription Checked from PostgreSQL&#xa;&#xa;Usability: Captions + Accessible Controls" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DBEAFE;strokeColor=#2563EB;strokeWidth=2;fontSize=15;" vertex="1" parent="1">
+          <mxGeometry x="850" y="120" width="650" height="680" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="outOfScope" value="OUT OF SCOPE: Live Streaming • Offline Downloads • Advertising • Social Features • ML Recommendations • Global Active-Active Deployment • Payment Gateway Implementation • Full Commercial DRM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEE2E2;strokeColor=#DC2626;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="850" width="1400" height="90" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- ===================================================== -->
+  <!-- PAGE 3 - BACK OF ENVELOPE -->
+  <!-- ===================================================== -->
+  <diagram id="estimates" name="03 - Back of the Envelope Estimation">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" page="1" pageWidth="1600" pageHeight="1000">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="estimateTitle" value="NETFLIX - BACK-OF-THE-ENVELOPE ESTIMATION" style="text;html=1;strokeColor=none;fillColor=none;fontSize=27;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="30" width="800" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="assumptions" value="1. ASSUMPTIONS&#xa;&#xa;Registered Accounts = 1,000,000&#xa;Profiles = 2,000,000&#xa;Daily Active Users = 100,000&#xa;Watch Time = 2 hours/user/day&#xa;Peak Concurrent Users = 20,000&#xa;Average Video Bitrate = 5 Mbps&#xa;Browse/Search Requests = 40/user/day&#xa;Catalog = 10,000 videos&#xa;Average Video Duration = 1 hour" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F2FE;strokeColor=#0284C7;strokeWidth=2;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="60" y="120" width="460" height="400" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="apiTraffic" value="2. API TRAFFIC&#xa;&#xa;Browse/Search per day&#xa;100,000 × 40 = 4,000,000&#xa;&#xa;Average RPS&#xa;4,000,000 / 86,400 ≈ 46 RPS&#xa;&#xa;Peak RPS&#xa;46 × 5 ≈ 230 RPS&#xa;&#xa;Progress Updates&#xa;≈ 333 peak writes/sec&#xa;&#xa;Combined Peak ≈ 570 RPS&#xa;&#xa;Capacity Target ≈ 1,000 - 1,200 RPS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#16A34A;strokeWidth=2;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="570" y="120" width="460" height="400" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="bandwidth" value="3. VIDEO BANDWIDTH&#xa;&#xa;Average Concurrent Viewers&#xa;100,000 × 2 / 24 ≈ 8,333&#xa;&#xa;Average Bandwidth&#xa;8,333 × 5 Mbps ≈ 41.7 Gbps&#xa;&#xa;Peak Bandwidth&#xa;20,000 × 5 Mbps = 100 Gbps&#xa;&#xa;Daily Video Transfer&#xa;≈ 450 TB/day&#xa;&#xa;95% CDN Hit Ratio&#xa;Origin Traffic ≈ 22.5 TB/day" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#CFFAFE;strokeColor=#0891B2;strokeWidth=2;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="120" width="460" height="400" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="storage" value="4. VIDEO STORAGE&#xa;&#xa;Encoded Versions&#xa;≈ 5.4 GB per 1 hour video&#xa;&#xa;10,000 × 5.4 GB&#xa;≈ 54 TB encoded library&#xa;&#xa;Original Uploads&#xa;≈ 22.5 GB per video&#xa;&#xa;10,000 × 22.5 GB&#xa;≈ 225 TB originals&#xa;&#xa;TOTAL LOGICAL STORAGE&#xa;≈ 279 TB&#xa;&#xa;Before redundancy, backups and future growth" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EDE9FE;strokeColor=#7C3AED;strokeWidth=2;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="570" y="560" width="460" height="360" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- ===================================================== -->
+  <!-- PAGE 4 - COMPONENTS -->
+  <!-- ===================================================== -->
+  <diagram id="components" name="04 - Components Used">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" page="1" pageWidth="1600" pageHeight="1000">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="componentTitle" value="NETFLIX - COMPONENTS USED" style="text;html=1;strokeColor=none;fillColor=none;fontSize=28;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="30" width="600" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="comp1" value="CLIENT / USERS&#xa;&#xa;Web Browser&#xa;Mobile App&#xa;Smart TV&#xa;&#xa;Used to browse and watch content." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F2FE;strokeColor=#0284C7;strokeWidth=2;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="100" y="140" width="300" height="200" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="comp2" value="LOAD BALANCER&#xa;&#xa;Distributes requests across healthy backend servers.&#xa;&#xa;Provides horizontal scaling and failover." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;strokeWidth=2;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="466" y="140" width="300" height="200" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="comp3" value="BACKEND SERVERS&#xa;&#xa;Authentication&#xa;Catalog&#xa;Playback Authorization&#xa;Watch Progress&#xa;My List&#xa;Admin Operations" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#16A34A;strokeWidth=2;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="833" y="140" width="300" height="200" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="comp4" value="REDIS CACHE&#xa;&#xa;Caches frequently requested catalog data.&#xa;&#xa;Reduces repeated PostgreSQL reads." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEE2E2;strokeColor=#DC2626;strokeWidth=2;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="140" width="300" height="200" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="comp5" value="POSTGRESQL&#xa;&#xa;Accounts&#xa;Profiles&#xa;Subscriptions&#xa;Titles&#xa;Watch Progress&#xa;My List" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#DBEAFE;strokeColor=#2563EB;strokeWidth=2;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="100" y="400" width="300" height="220" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="comp6" value="OBJECT STORAGE&#xa;&#xa;Original Videos&#xa;Encoded Video Files&#xa;HLS Segments&#xa;Manifests&#xa;Captions" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#EDE9FE;strokeColor=#7C3AED;strokeWidth=2;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="466" y="400" width="300" height="220" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="comp7" value="VIDEO ENCODING WORKER&#xa;&#xa;Transcodes original video into multiple qualities.&#xa;&#xa;Generates HLS segments and manifests." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFEDD5;strokeColor=#EA580C;strokeWidth=2;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="833" y="400" width="300" height="220" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="comp8" value="CDN&#xa;&#xa;Caches and delivers video near users.&#xa;&#xa;Reduces latency and origin bandwidth." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#CFFAFE;strokeColor=#0891B2;strokeWidth=2;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="400" width="300" height="220" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="comp9" value="MONITORING &amp; BACKUP&#xa;&#xa;Monitor errors, latency, server health, database load and CDN hit ratio.&#xa;&#xa;Database backups and redundant storage provide recovery." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E8FF;strokeColor=#9333EA;strokeWidth=2;fontSize=15;" vertex="1" parent="1">
+          <mxGeometry x="466" y="680" width="667" height="130" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- ===================================================== -->
+  <!-- PAGE 5 - BROWSE AND SEARCH FLOW -->
+  <!-- ===================================================== -->
+  <diagram id="browse-flow" name="05 - Browse and Search Flow">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" page="1" pageWidth="1600" pageHeight="1000">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="browseTitle" value="NETFLIX - BROWSE &amp; SEARCH FLOW" style="text;html=1;strokeColor=none;fillColor=none;fontSize=28;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="600" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="browseUser" value="USER&#xa;&#xa;Search / Browse" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F2FE;strokeColor=#0284C7;strokeWidth=2;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="400" width="180" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="browseLB" value="LOAD BALANCER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;strokeWidth=2;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="415" width="180" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="browseBackend" value="BACKEND API&#xa;&#xa;Validate Request&#xa;Authenticate User" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#16A34A;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="380" width="220" height="160" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="browseRedis" value="REDIS CACHE&#xa;&#xa;Catalog Cache" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEE2E2;strokeColor=#DC2626;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="830" y="200" width="220" height="130" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cacheDecision" value="CACHE HIT?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FEF9C3;strokeColor=#CA8A04;strokeWidth=2;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="830" y="395" width="220" height="130" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="browseSQL" value="POSTGRESQL&#xa;&#xa;Titles&#xa;Genres&#xa;Metadata" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#DBEAFE;strokeColor=#2563EB;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="830" y="600" width="220" height="160" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="browseResponse" value="JSON RESPONSE&#xa;&#xa;Titles&#xa;Descriptions&#xa;Duration&#xa;Next Cursor" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECFCCB;strokeColor=#65A30D;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="395" width="220" height="130" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="b1" value="Request" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="browseUser" target="browseLB">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="b2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="browseLB" target="browseBackend">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="b3" value="Check Cache" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="browseBackend" target="browseRedis">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="640" y="265"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="browseRedis" target="cacheDecision">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="b5" value="MISS" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="cacheDecision" target="browseSQL">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="b6" value="HIT" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="cacheDecision" target="browseResponse">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="b7" value="Store in Cache" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="browseSQL" target="browseRedis">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="770" y="680"/>
+              <mxPoint x="770" y="265"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="b8" value="Return Results" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="browseBackend" target="browseResponse">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="640" y="340"/>
+              <mxPoint x="1250" y="340"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- ===================================================== -->
+  <!-- PAGE 6 - PLAYBACK FLOW -->
+  <!-- ===================================================== -->
+  <diagram id="playback-flow" name="06 - Playback and Streaming Flow">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" page="1" pageWidth="1600" pageHeight="1000">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="playTitle" value="NETFLIX - PLAYBACK &amp; STREAMING FLOW" style="text;html=1;strokeColor=none;fillColor=none;fontSize=28;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="450" y="30" width="700" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="playUser" value="USER / PLAYER&#xa;&#xa;Press PLAY" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F2FE;strokeColor=#0284C7;strokeWidth=2;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="400" width="180" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="playLB" value="LOAD BALANCER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;strokeWidth=2;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="415" width="180" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="playBackend" value="BACKEND SERVER&#xa;&#xa;Authentication&#xa;Profile Ownership&#xa;Subscription Check&#xa;Availability Check&#xa;Title READY Check" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#16A34A;strokeWidth=2;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="355" width="260" height="210" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="playSQL" value="POSTGRESQL&#xa;&#xa;Subscription&#xa;Availability&#xa;Watch Progress" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#DBEAFE;strokeColor=#2563EB;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="850" y="160" width="230" height="170" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="playGrant" value="PLAYBACK GRANT&#xa;&#xa;Manifest URL&#xa;Short-lived Token&#xa;Resume Position&#xa;Expiry" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E8FF;strokeColor=#9333EA;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="850" y="500" width="230" height="170" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="playCDN" value="CDN&#xa;&#xa;Manifest&#xa;Video Segments&#xa;Adaptive Bitrate&#xa;Cache" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#CFFAFE;strokeColor=#0891B2;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="350" width="230" height="190" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="playStorage" value="OBJECT STORAGE&#xa;&#xa;Encoded Video&#xa;HLS Segments&#xa;Manifest" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#EDE9FE;strokeColor=#7C3AED;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="600" width="230" height="160" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="p1" value="POST /playback" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="playUser" target="playLB">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="p2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="playLB" target="playBackend">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="p3" value="Access Check" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="playBackend" target="playSQL">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="790" y="460"/>
+              <mxPoint x="790" y="245"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p4" value="Allowed" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="playSQL" target="playGrant">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1000" y="400"/>
+              <mxPoint x="965" y="400"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p5" value="Manifest + Token" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="playGrant" target="playCDN">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="p6" value="Cache Miss" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="playCDN" target="playStorage">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="p7" value="Video Segments" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="playCDN" target="playUser">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1265" y="270"/>
+              <mxPoint x="140" y="270"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="playNote" value="IMPORTANT: Backend authorizes playback. CDN delivers the large video files directly to users." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF7ED;strokeColor=#EA580C;strokeWidth=2;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="375" y="850" width="850" height="70" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- ===================================================== -->
+  <!-- PAGE 7 - ADMIN UPLOAD -->
+  <!-- ===================================================== -->
+  <diagram id="upload-flow" name="07 - Admin Upload and Encoding Flow">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" page="1" pageWidth="1600" pageHeight="1000">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="uploadTitle" value="NETFLIX - ADMIN UPLOAD &amp; ENCODING FLOW" style="text;html=1;strokeColor=none;fillColor=none;fontSize=27;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="30" width="760" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="admin" value="AUTHORIZED ADMIN" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEE2E2;strokeColor=#DC2626;strokeWidth=2;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="420" width="190" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="uploadBackend" value="BACKEND API&#xa;&#xa;Admin Authentication&#xa;Create Draft&#xa;Generate Upload URL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#16A34A;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="385" width="230" height="170" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="originalStorage" value="OBJECT STORAGE&#xa;&#xa;Original Video Upload" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#EDE9FE;strokeColor=#7C3AED;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="200" width="230" height="150" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="encodingJob" value="ENCODING JOB&#xa;&#xa;PENDING&#xa;PROCESSING&#xa;COMPLETED&#xa;FAILED" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#DBEAFE;strokeColor=#2563EB;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="550" width="230" height="160" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="worker" value="VIDEO ENCODING WORKER&#xa;&#xa;Claim Job&#xa;Validate Video&#xa;Transcode&#xa;Generate HLS&#xa;Create Segments" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="370" width="240" height="200" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="encodedStorage" value="ENCODED OUTPUT&#xa;&#xa;360p&#xa;480p&#xa;720p&#xa;1080p&#xa;HLS Manifest" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#CFFAFE;strokeColor=#0891B2;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1250" y="370" width="220" height="200" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ready" value="TITLE STATUS = READY&#xa;&#xa;Invalidate Catalog Cache&#xa;Content Available for Playback" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#16A34A;strokeWidth=2;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="650" width="330" height="120" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="u1" value="Request Upload URL" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="admin" target="uploadBackend">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="u2" value="Upload Video" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="admin" target="originalStorage">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="145" y="275"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="u3" value="Create Job" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="uploadBackend" target="encodingJob">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="415" y="630"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="u4" value="Claim Job" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="encodingJob" target="worker">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="860" y="630"/>
+              <mxPoint x="860" y="520"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="u5" value="Read Original" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="originalStorage" target="worker">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="860" y="275"/>
+              <mxPoint x="860" y="420"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="u6" value="Encoded Output" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="worker" target="encodedStorage">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="u7" value="Publish" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="worker" target="ready">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- ===================================================== -->
+  <!-- PAGE 8 - WATCH PROGRESS -->
+  <!-- ===================================================== -->
+  <diagram id="progress-flow" name="08 - Watch Progress and Resume Flow">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" page="1" pageWidth="1600" pageHeight="1000">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="progressTitle" value="NETFLIX - WATCH PROGRESS &amp; RESUME FLOW" style="text;html=1;strokeColor=none;fillColor=none;fontSize=28;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="40" width="800" height="50" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="progressUser" value="USER WATCHING VIDEO&#xa;&#xa;positionSeconds = 1260" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E0F2FE;strokeColor=#0284C7;strokeWidth=2;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="390" width="230" height="130" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="progressTimer" value="SAVE PROGRESS&#xa;&#xa;Every 60 Seconds&#xa;Also on Pause / Exit" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#D97706;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="390" width="220" height="130" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="progressLB" value="LOAD BALANCER" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3F4F6;strokeColor=#6B7280;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="410" width="190" height="90" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="progressBackend" value="BACKEND SERVER&#xa;&#xa;Validate User&#xa;Validate Profile&#xa;Validate Title&#xa;Validate Position" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#16A34A;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="360" width="230" height="190" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="progressSQL" value="POSTGRESQL&#xa;&#xa;watch_progress&#xa;&#xa;profile_id&#xa;title_id&#xa;position_seconds&#xa;updated_at" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#DBEAFE;strokeColor=#2563EB;strokeWidth=2;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="355" width="230" height="200" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="resume" value="RESUME ON ANOTHER DEVICE&#xa;&#xa;Read Latest Position&#xa;Continue Watching" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E8FF;strokeColor=#9333EA;strokeWidth=2;fontSize=15;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="650" width="300" height="130" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="w1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="progressUser" target="progressTimer">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="w2" value="PUT /progress" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="progressTimer" target="progressLB">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="w3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="progressLB" target="progressBackend">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="w4" value="UPSERT" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="progressBackend" target="progressSQL">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="w5" value="Latest Position" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=2;" edge="1" parent="1" source="progressSQL" target="resume">
+          <mxGeometry relative="1" as="geometry">
+             <Array as="points">
+              <mxPoint x="1315" y="715"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
